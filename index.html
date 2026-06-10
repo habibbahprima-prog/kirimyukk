@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KirimYuk · Portfolio UX Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Cabinet+Grotesk:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:        #0e0e0e;
+      --paper:      #f5f2ec;
+      --paper2:     #ede9e0;
+      --paper3:     #e4dfd3;
+      --card:       #faf9f6;
+      --accent:     #1a5c2a;
+      --accent2:    #2d8e47;
+      --accent-dim: rgba(26,92,42,0.08);
+      --accent-med: rgba(26,92,42,0.2);
+      --muted:      #8a8478;
+      --sub:        #4a4740;
+      --border:     rgba(14,14,14,0.1);
+      --glow:       0 0 40px rgba(26,92,42,0.12);
+      --lift:       0 4px 32px rgba(14,14,14,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    * { cursor: none !important; }
+    #cursor {
+      position: fixed; z-index: 9999;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%,-50%);
+      transition: transform .12s, width .2s, height .2s, background .2s;
+      mix-blend-mode: multiply;
+    }
+    #cursor.big {
+      width: 38px; height: 38px;
+      background: rgba(26,92,42,0.15);
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3.5rem;
+      background: rgba(245,242,236,0.85);
+      backdrop-filter: blur(20px) saturate(1.5);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem; font-weight: 900;
+      color: var(--ink); letter-spacing: -.04em;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--accent);
+      transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 3.5rem 5rem;
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      bottom: -2rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Fraunces', serif;
+      font-size: clamp(7rem,22vw,22rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(26,92,42,0.07);
+      pointer-events: none;
+      line-height: 1;
+      letter-spacing: -.05em;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-med);
+      border-radius: 100px;
+      padding: .4rem 1.1rem; font-size: .68rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 2rem;
+      font-weight: 700;
+    }
+    .hero-badge .pulse {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ box-shadow: 0 0 0 0 rgba(26,92,42,.5); }
+      50%{ box-shadow: 0 0 0 5px rgba(26,92,42,0); }
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(4rem, 10vw, 9.5rem);
+      font-weight: 900; line-height: .9;
+      letter-spacing: -.04em; color: var(--ink);
+      margin-bottom: 2rem;
+    }
+    .hero-title .green { color: var(--accent); }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1rem; color: var(--sub);
+      max-width: 480px; line-height: 1.8;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn-solid {
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 6px;
+      padding: .9rem 2rem; font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-solid:hover {
+      transform: translateY(-2px);
+      background: var(--accent2);
+      box-shadow: 0 10px 28px rgba(26,92,42,.3);
+    }
+
+    .btn-ghost {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--border); border-radius: 6px;
+      padding: .9rem 2rem; font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 700; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .scroll-indicator {
+      display: flex; align-items: center; gap: .8rem;
+      color: var(--muted); font-size: .68rem; letter-spacing: .12em;
+      text-transform: uppercase; font-weight: 700; margin-top: 4rem;
+      justify-content: center;
+    }
+    .scroll-arrow {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100%{ transform: translateY(0) }
+      50%{ transform: translateY(4px) }
+    }
+    .scroll-arrow svg { width: 14px; height: 14px; }
+
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: .85rem 0;
+      background: var(--ink);
+    }
+    .ticker-inner {
+      display: flex; gap: 0;
+      animation: ticker 28s linear infinite;
+      width: max-content;
+    }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .tick-item {
+      display: flex; align-items: center; gap: .5rem;
+      white-space: nowrap; color: rgba(255,255,255,0.45);
+      font-size: .65rem; letter-spacing: .16em; text-transform: uppercase;
+      font-weight: 700; padding: 0 2rem;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .tick-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; }
+
+    section { padding: 7rem 3.5rem; position: relative; z-index: 2; }
+
+    .sec-eyebrow {
+      display: inline-flex; align-items: center; gap: .8rem;
+      font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent); font-weight: 800; margin-bottom: 1.2rem;
+    }
+    .sec-eyebrow .line { width: 28px; height: 1.5px; background: var(--accent); }
+
+    .sec-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -.03em; margin-bottom: 1rem; color: var(--ink);
+    }
+    .sec-desc {
+      color: var(--sub); font-size: .95rem;
+      line-height: 1.85; max-width: 560px; margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .card:hover {
+      border-color: var(--accent-med);
+      transform: translateY(-4px);
+      box-shadow: var(--lift);
+    }
+
+    .figma-block {
+      border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+      background: var(--paper3); margin-bottom: 2rem;
+      box-shadow: var(--lift);
+    }
+    .figma-chrome {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .7rem 1rem; background: var(--paper2);
+      border-bottom: 1px solid var(--border);
+    }
+    .chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .figma-block iframe { width: 100%; height: 500px; border: none; display: block; }
+    .figma-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .7rem 1.2rem;
+      border-top: 1px solid var(--border);
+      background: var(--card);
+    }
+    .figma-bar-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem; color: var(--muted);
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .figma-bar-label::before { content: '↗'; color: var(--accent); }
+    .figma-open-btn {
+      font-size: .7rem; color: var(--accent);
+      text-decoration: none; border: 1px solid var(--accent-med);
+      border-radius: 4px; padding: .28rem .85rem;
+      font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      transition: background .2s, color .2s;
+    }
+    .figma-open-btn:hover { background: var(--accent); color: #fff; }
+
+    .overview {
+      background: var(--ink);
+      color: #fff;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .overview .sec-eyebrow { color: var(--accent2); }
+    .overview .sec-eyebrow .line { background: var(--accent2); }
+    .overview .sec-title { color: #fff; }
+    .overview .sec-desc { color: rgba(255,255,255,.55); }
+
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; overflow: hidden;
+    }
+    .stat-box {
+      background: rgba(255,255,255,.03); padding: 2rem;
+      transition: background .2s;
+    }
+    .stat-box:hover { background: rgba(255,255,255,.07); }
+    .stat-lbl { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .6rem; font-weight: 700; }
+    .stat-val { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700; color: #fff; }
+    .stat-val em { color: var(--accent2); font-style: normal; }
+
+    .empathize { background: var(--paper); }
+    .persona-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-bottom: 3rem; }
+
+    .persona-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.8rem;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .persona-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .persona-card:hover { border-color: var(--accent-med); transform: translateY(-4px); box-shadow: var(--lift); }
+    .persona-card:hover::before { transform: scaleX(1); }
+
+    .persona-photo {
+      width: 56px; height: 56px; border-radius: 10px;
+      object-fit: cover; margin-bottom: 1rem; display: block;
+      border: 2px solid var(--accent-med);
+    }
+    .persona-photo-fallback {
+      width: 56px; height: 56px; border-radius: 10px;
+      background: var(--accent-dim); border: 2px solid var(--accent-med);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1rem;
+    }
+    .persona-name { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; margin-bottom: .2rem; }
+    .persona-role { font-size: .68rem; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .9rem; font-weight: 700; }
+    .persona-desc { font-size: .83rem; color: var(--sub); line-height: 1.7; margin-bottom: 1.1rem; font-weight: 300; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      background: var(--accent-dim); border: 1px solid var(--accent-med);
+      border-radius: 4px; padding: .2rem .65rem;
+      font-size: .65rem; color: var(--accent); font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .insight-lbl {
+      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem; font-weight: 800;
+    }
+    .insight-row { display: flex; gap: .8rem; margin-bottom: .9rem; align-items: flex-start; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-top: .45rem; flex-shrink: 0; }
+    .insight-row p { font-size: .85rem; color: var(--sub); line-height: 1.7; font-weight: 300; }
+
+    .define { background: var(--paper2); }
+    .define-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .define-lbl {
+      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem; font-weight: 800;
+    }
+    blockquote {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 1rem; line-height: 1.8;
+      border-left: 3px solid var(--accent); padding-left: 1.2rem;
+      color: var(--ink); font-weight: 300;
+    }
+    .hmw-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+    .hmw-list li {
+      display: flex; gap: .8rem; font-size: .85rem; color: var(--sub);
+      line-height: 1.7; font-weight: 300;
+    }
+    .hmw-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
+
+    .priority-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.2rem; }
+    .prio-row { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1rem 1.2rem; background: var(--paper); border-radius: 8px; border: 1px solid var(--border); transition: border-color .2s; }
+    .prio-row:hover { border-color: var(--accent-med); }
+    .prio-num { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--accent); width: 24px; flex-shrink: 0; margin-top: .1rem; font-weight: 500; }
+    .prio-row p { font-size: .85rem; color: var(--sub); line-height: 1.7; font-weight: 300; }
+    .prio-row strong { color: var(--ink); font-weight: 700; }
+
+    .test-responden-wrap {
+      display: grid; grid-template-columns: 1fr 1.8fr;
+      gap: 1.5rem; margin-bottom: 2rem; align-items: start;
+    }
+    .responden-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; box-shadow: var(--lift);
+    }
+    .responden-info { padding: 1.5rem; }
+    .responden-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: .25rem;
+    }
+    .responden-role {
+      font-size: .75rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: .12em;
+      font-weight: 700; margin-bottom: .9rem;
+    }
+    .responden-quote {
+      font-size: .85rem; color: var(--sub);
+      line-height: 1.7; font-style: italic;
+    }
+    .responden-card img {
+      width: 100%; aspect-ratio: 1 / 1;
+      object-fit: cover; display: block;
+    }
+    .test-table-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .test-table-head {
+      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+      background: var(--paper2);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    thead tr { border-bottom: 1px solid var(--border); }
+    th {
+      padding: .7rem 1.3rem; text-align: left;
+      color: var(--muted); font-weight: 700; font-size: .65rem;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    td { padding: .75rem 1.3rem; color: var(--sub); border-bottom: 1px solid rgba(14,14,14,.04); font-weight: 300; font-size: .83rem; }
+    tr:last-child td { border-bottom: none; }
+    .status-ok { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: .75rem; }
+
+    /* ── IMPROVEMENT CARDS ── */
+    .improvement-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem;
+    }
+    .feedback-label { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; }
+    .feedback-q { font-size: .85rem; font-weight: 700; color: var(--ink); margin-bottom: .4rem; }
+    .feedback-a {
+      font-size: .8rem; color: var(--sub); font-style: italic; font-weight: 300;
+      border-left: 3px solid var(--accent); padding-left: .9rem; margin-bottom: 1.3rem;
+    }
+
+    /* Before/After item */
+    .ba-item {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; margin-bottom: 1rem;
+    }
+    .ba-before {
+      background: #fef2f2; padding: 1rem 1.2rem;
+      border-right: 1px solid var(--border);
+    }
+    .ba-after {
+      background: #f0fdf4; padding: 1rem 1.2rem;
+    }
+    .ba-label {
+      font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
+      font-weight: 800; margin-bottom: .4rem;
+    }
+    .ba-label.before { color: #dc2626; }
+    .ba-label.after  { color: #16a34a; }
+    .ba-text { font-size: .82rem; color: var(--sub); line-height: 1.65; font-weight: 300; }
+
+    .kesimpulan-box {
+      background: var(--ink); color: rgba(255,255,255,.85);
+      border-radius: 14px; padding: 2.5rem;
+      margin-top: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .kesimpulan-box::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+    }
+    .kesimpulan-box .insight-lbl { color: var(--accent2); }
+    .kesimpulan-box p { font-size: .92rem; line-height: 1.85; font-weight: 300; color: rgba(255,255,255,.7); }
+
+    .portfolio-section { background: var(--paper2); }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 0; }
+    .portfolio-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s; position: relative;
+    }
+    .portfolio-card:hover { border-color: var(--accent-med); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(14,14,14,.12); }
+    .portfolio-thumb { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background: var(--paper3); }
+    .portfolio-thumb-placeholder {
+      width: 100%; aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--paper3) 0%, var(--paper2) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .6rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .portfolio-thumb-placeholder::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(26,92,42,.03) 12px, rgba(26,92,42,.03) 24px);
+    }
+    .portfolio-thumb-placeholder .ph-icon { font-size: 2rem; opacity: .4; position: relative; z-index: 1; }
+    .portfolio-thumb-placeholder .ph-text { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; position: relative; z-index: 1; }
+    .portfolio-badge {
+      position: absolute; top: .85rem; left: .85rem;
+      background: var(--ink); color: rgba(255,255,255,.75);
+      font-family: 'JetBrains Mono', monospace; font-size: .6rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .25rem .65rem; border-radius: 4px; font-weight: 500;
+    }
+    .portfolio-body { padding: 1.5rem; }
+    .portfolio-category { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: .5rem; }
+    .portfolio-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; line-height: 1.25; }
+    .portfolio-desc { font-size: .82rem; color: var(--sub); line-height: 1.7; font-weight: 300; margin-bottom: 1.2rem; }
+    .portfolio-meta { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.2rem; }
+    .portfolio-tag { background: var(--accent-dim); border: 1px solid var(--accent-med); border-radius: 4px; padding: .18rem .6rem; font-size: .62rem; color: var(--accent); font-weight: 700; letter-spacing: .04em; }
+    .portfolio-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1.5px solid var(--accent-med); border-radius: 6px; padding: .5rem 1.1rem; transition: background .2s, border-color .2s, color .2s; }
+    .portfolio-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .portfolio-upload-card { background: var(--card); border: 2px dashed var(--border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem 2rem; text-align: center; min-height: 320px; transition: border-color .3s, background .3s; }
+    .portfolio-upload-card:hover { border-color: var(--accent-med); background: var(--accent-dim); }
+    .upload-icon { width: 48px; height: 48px; border: 1.5px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--muted); background: var(--paper2); }
+    .upload-label { font-family: 'Fraunces', serif; font-size: .95rem; font-weight: 700; color: var(--sub); }
+    .upload-sub { font-size: .75rem; color: var(--muted); line-height: 1.6; max-width: 180px; }
+
+    .creator { background: var(--paper); text-align: center; }
+    .creator-card {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: var(--ink); border-radius: 20px;
+      padding: 3rem 4rem; gap: 1rem; max-width: 480px; margin: 0 auto;
+      position: relative; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(14,14,14,.25);
+    }
+    .creator-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .creator-photo { width: 88px; height: 88px; border-radius: 14px; object-fit: cover; border: 2px solid rgba(255,255,255,.1); }
+    .creator-photo-fallback { width: 88px; height: 88px; border-radius: 14px; background: rgba(26,92,42,.2); border: 2px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+    .creator-name { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .creator-nim { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .creator-bio { font-size: .86rem; color: rgba(255,255,255,.55); line-height: 1.8; max-width: 340px; text-align: center; font-weight: 300; }
+    .socials { display: flex; gap: .6rem; margin-top: .5rem; }
+    .social-btn { border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: .35rem 1rem; font-size: .7rem; color: rgba(255,255,255,.5); text-decoration: none; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transition: border-color .2s, color .2s, background .2s; }
+    .social-btn:hover { border-color: var(--accent2); color: var(--accent2); background: rgba(45,142,71,.1); }
+
+    .watermark { font-family: 'Fraunces', serif; font-size: clamp(5rem, 18vw, 18rem); font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(14,14,14,.05); text-align: center; line-height: 1; pointer-events: none; user-select: none; letter-spacing: -.05em; padding: 2rem 0; overflow: hidden; }
+
+    footer { background: var(--ink); padding: 2.5rem 3.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,.05); }
+    .foot-logo { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; color: #fff; letter-spacing: -.02em; }
+    .foot-logo span { color: var(--accent2); }
+    footer p { font-size: .73rem; color: rgba(255,255,255,.35); }
+    footer .mono { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: rgba(255,255,255,.2); }
+
+    .divider-line { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; }
+    .divider-line h3 { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; color: var(--sub); white-space: nowrap; }
+    .divider-line::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .section-tag { position: absolute; top: 3.5rem; right: 3.5rem; font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--border); letter-spacing: .1em; font-weight: 500; }
+
+    @media(max-width:960px){
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: .9rem; }
+      .nav-links a { font-size: .62rem; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 8rem 1.5rem 4rem; }
+      .overview { grid-template-columns: 1fr; gap: 3rem; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .define-grid { grid-template-columns: 1fr; }
+      .test-responden-wrap { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .improvement-grid { grid-template-columns: 1fr; }
+      .ba-item { grid-template-columns: 1fr; }
+      .ba-before { border-right: none; border-bottom: 1px solid var(--border); }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .section-tag { display: none; }
+    }
+    @media(min-width:961px) and (max-width:1200px){
+      .portfolio-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<script>
+  const c = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    c.style.left = e.clientX + 'px';
+    c.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => c.classList.add('big'));
+    el.addEventListener('mouseleave', () => c.classList.remove('big'));
+  });
+</script>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Kirim<span>.</span>Yuk</div>
+  <ul class="nav-links">
+    <li><a href="#empathize">Empathize</a></li>
+    <li><a href="#define">Define</a></li>
+    <li><a href="#ideate">Ideate</a></li>
+    <li><a href="#prototype">Prototype</a></li>
+    <li><a href="#uikit">UI Kit</a></li>
+    <li><a href="#test">Test</a></li>
+    <li><a href="#creator">Creator</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">KY</div>
+  <div class="hero-badge"><span class="pulse"></span>UX Design Case Study · 2025</div>
+  <h1 class="hero-title">
+    KIRIM<br/>
+    <span class="green">YUK</span><br/>
+    <span class="outline">APP</span>
+  </h1>
+  <p class="hero-sub">
+    Solusi pengiriman barang lokal yang menghubungkan kebutuhan kiriman Anda dengan kecepatan dan kemudahan
+  </p>
+  <div class="cta-row">
+    <a href="https://www.figma.com/proto/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?page-id=83%3A1290&node-id=151-126&viewport=235%2C2893%2C0.12&t=memEpcNmQoYiUFpB-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=151%3A126&show-proto-sidebar=1" class="btn-solid" target="_blank">↗ Coba Prototype</a>
+    <a href="#empathize" class="btn-ghost">Baca Case Study</a>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    Scroll untuk menjelajah
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tick-item"><span class="tick-dot"></span>User Research</span>
+    <span class="tick-item"><span class="tick-dot"></span>Customer Journey Map</span>
+    <span class="tick-item"><span class="tick-dot"></span>Affinity Diagram</span>
+    <span class="tick-item"><span class="tick-dot"></span>Problem Statement</span>
+    <span class="tick-item"><span class="tick-dot"></span>How Might We</span>
+    <span class="tick-item"><span class="tick-dot"></span>Crazy 8 Brainstorming</span>
+    <span class="tick-item"><span class="tick-dot"></span>Low-Fidelity Sketches</span>
+    <span class="tick-item"><span class="tick-dot"></span>User Flow</span>
+    <span class="tick-item"><span class="tick-dot"></span>High-Fidelity Prototype</span>
+    <span class="tick-item"><span class="tick-dot"></span>UI Kit &amp; Design System</span>
+    <span class="tick-item"><span class="tick-dot"></span>User Research</span>
+    <span class="tick-item"><span class="tick-dot"></span>Customer Journey Map</span>
+    <span class="tick-item"><span class="tick-dot"></span>Affinity Diagram</span>
+    <span class="tick-item"><span class="tick-dot"></span>Problem Statement</span>
+    <span class="tick-item"><span class="tick-dot"></span>How Might We</span>
+    <span class="tick-item"><span class="tick-dot"></span>Crazy 8 Brainstorming</span>
+    <span class="tick-item"><span class="tick-dot"></span>Low-Fidelity Sketches</span>
+    <span class="tick-item"><span class="tick-dot"></span>User Flow</span>
+    <span class="tick-item"><span class="tick-dot"></span>High-Fidelity Prototype</span>
+    <span class="tick-item"><span class="tick-dot"></span>UI Kit &amp; Design System</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="overview">
+  <div>
+    <span class="sec-eyebrow"><span class="line"></span>Overview Proyek</span>
+    <h2 class="sec-title">Cepat, Simpel,<br/><span style="color:var(--accent2)">Solutif.</span></h2>
+    <p class="sec-desc">
+      Proyek ini lahir dari kebutuhan nyata pengguna yang frustrasi dengan
+      aplikasi transportasi online yang ada — terlalu kompleks dan tidak intuitif.
+      Melalui proses Design Thinking end-to-end, kami merancang solusi yang
+      berfokus pada kecepatan dan kemudahan penggunaan.
+    </p>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-lbl">Timeline</div>
+      <div class="stat-val">3<em>Weeks</em></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-lbl">Tools</div>
+      <div class="stat-val" style="font-size:1.1rem;">Figma &amp;<br/>FigJam</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-lbl">Responden</div>
+      <div class="stat-val">3 <em>orang</em></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-lbl">Tahapan</div>
+      <div class="stat-val">5 <em>fase</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 EMPATHIZE -->
+<section class="empathize" id="empathize">
+  <span class="section-tag">01 / 05</span>
+  <span class="sec-eyebrow"><span class="line"></span>01 — Empathize</span>
+  <h2 class="sec-title">Memahami Pengguna<br/>Secara Mendalam</h2>
+  <p class="sec-desc">
+    Kami melakukan wawancara, observasi, dan kuesioner singkat kepada
+    pengguna aktif untuk memahami kebutuhan dan frustrasi mereka.
+  </p>
+
+  <div class="divider-line"><h3>User Personas</h3></div>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <img class="persona-photo" src="FOTO/F4.jpeg" alt="Foto Persona 1"
+           onerror="this.outerHTML='<div class=\'persona-photo-fallback\'>👤</div>'" />
+      <div class="persona-name">Virizia</div>
+      <div class="persona-role">Mahasiswa · 19 tahun</div>
+      <p class="persona-desc">Mahasiswi aktif yang memiliki mobilitas tinggi dalam kegiatan sehari-hari. Sering menggunakan layanan transportasi online untuk pergi ke kampus, memesan makanan, dan sesekali mengirim barang. Mengutamakan kemudahan, kepraktisan, dan harga yang sesuai.</p>
+      <div class="tags">
+        <span class="tag">Driver kurang ramah atau kurang memahami navigasi</span>
+        <span class="tag">Harga layanan terkadang tidak sesuai ekspektasi</span>
+        <span class="tag">Transportasi cepat, nyaman, dan terjangkau</span>
+      </div>
+    </div>
+    <div class="persona-card">
+      <img class="persona-photo" src="FOTO/F3.jpeg" alt="Foto Persona 2"
+           onerror="this.outerHTML='<div class=\'persona-photo-fallback\'>👤</div>'" />
+      <div class="persona-name">Fikka</div>
+      <div class="persona-role">Mahasiswa · 20 tahun</div>
+      <p class="persona-desc">Mahasiswa yang fokus pada produktivitas akademik dan memiliki jadwal yang padat. Mengandalkan aplikasi untuk memesan makanan dan kebutuhan harian agar dapat menghemat waktu dan tetap fokus pada aktivitas kampus.</p>
+      <div class="tags">
+        <span class="tag">Akurasi lokasi pengantaran kurang tepat</span>
+        <span class="tag">Biaya kurang sebanding untuk jarak pendek</span>
+        <span class="tag">Layanan efisien dan menghemat waktu</span>
+      </div>
+    </div>
+    <div class="persona-card">
+      <img class="persona-photo" src="FOTO/F2.png" alt="Foto Persona 3"
+           onerror="this.outerHTML='<div class=\'persona-photo-fallback\'>👤</div>'" />
+      <div class="persona-name">Hanif</div>
+      <div class="persona-role">Pekerja · 37 tahun</div>
+      <p class="persona-desc">Karyawan dengan mobilitas tinggi yang tinggal cukup jauh dari tempat kerja. Lebih sering menggunakan kendaraan pribadi, namun memanfaatkan aplikasi untuk pemesanan makanan dan pengiriman barang ketika sedang sibuk atau tidak bisa keluar rumah.</p>
+      <div class="tags">
+        <span class="tag">Pengiriman jarak jauh kurang optimal</span>
+        <span class="tag">Tidak ada layanan prioritas saat darurat</span>
+        <span class="tag">Layanan praktis, cepat, dan dapat diandalkan</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-line"><h3>Customer Journey Map &amp; Affinity Diagram</h3></div>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/wvOB9nhqAOIYyQeCeEIs42/Untitled?node-id=0-1" allowfullscreen></iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">Customer Journey Map · Affinity Diagram · FigJam</span>
+      <a href="https://www.figma.com/design/wvOB9nhqAOIYyQeCeEIs42/Untitled?node-id=0-1&m=dev&t=YcgZERfgqFg0bP8R-1" class="figma-open-btn" target="_blank">Buka di Figma</a>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="insight-lbl">Metodologi Riset</div>
+      <div class="insight-row"><div class="dot"></div><p><strong>Wawancara:</strong> Dilakukan terhadap 3 orang pengguna aktif.</p></div>
+      <div class="insight-row"><div class="dot"></div><p><strong>Observasi:</strong> Langsung mengamati penggunaan aplikasi existing.</p></div>
+      <div class="insight-row"><div class="dot"></div><p><strong>Kuesioner Singkat:</strong> Memvalidasi masalah secara kuantitatif.</p></div>
+    </div>
+    <div class="card">
+      <div class="insight-lbl">Key Interview Insights</div>
+      <div class="insight-row"><div class="dot"></div><p><strong style="color:var(--accent)">Kebutuhan Layanan Praktis:</strong> User memerlukan layanan pengiriman barang dan makanan yang praktis untuk mendukung efisiensi waktu serta tenaga.</p></div>
+      <div class="insight-row"><div class="dot"></div><p><strong style="color:var(--accent)">Profesionalisme Driver:</strong> User ingin semua driver memiliki sikap profesional dan standar pelayanan yang ramah selama perjalanan.</p></div>
+      <div class="insight-row"><div class="dot"></div><p><strong style="color:var(--accent)">Akurasi Navigasi:</strong> User memerlukan akurasi navigasi dan sistem komunikasi yang efektif dengan driver untuk menghindari hambatan di lapangan.</p></div>
+      <div class="insight-row"><div class="dot"></div><p><strong style="color:var(--accent)">Kesesuaian Harga:</strong> User memerlukan kebijakan harga yang adil dan sesuai dengan kualitas layanan yang dijanjikan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 DEFINE -->
+<section class="define" id="define">
+  <span class="section-tag">02 / 05</span>
+  <span class="sec-eyebrow"><span class="line"></span>02 — Define</span>
+  <h2 class="sec-title">Mendefinisikan<br/>Masalah Inti</h2>
+  <p class="sec-desc">
+    Berdasarkan hasil empathy, saya mendefinisikan masalah inti dan
+    merumuskan peluang solusi yang dapat dieksekusi.
+  </p>
+  <div class="define-grid">
+    <div class="card">
+      <div class="define-lbl">Problem Statement</div>
+      <blockquote>
+        "Gojek hanya digunakan saat kondisi tidak memungkinkan untuk berkendara sendiri — pengguna membutuhkan aplikasi transportasi yang praktis, driver yang profesional dan komunikatif, navigasi yang akurat, serta harga yang transparan dan sesuai dengan layanan yang diberikan."
+      </blockquote>
+    </div>
+    <div class="card">
+      <div class="define-lbl">How Might We (HMW)</div>
+      <ul class="hmw-list">
+        <li>Bagaimana kita bisa membuat proses pemesanan layanan pengiriman barang terasa semudah dan secepat mungkin bagi pengguna?</li>
+        <li>Bagaimana kita bisa membantu pengguna memenuhi kebutuhan pengiriman barang sehari-hari dalam satu kota/kabupaten kapan pun mereka butuhkan, termasuk tengah malam?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div class="define-lbl">Prioritas Masalah</div>
+    <div class="priority-list">
+      <div class="prio-row"><span class="prio-num">01</span><p><strong>Sederhanakan alur pemesanan menjadi maksimal 3 langkah</strong> (Input alamat → pilih layanan → konfirmasi) untuk mengurangi friksi pengguna. <em style="color:var(--muted)">— High Impact, High Effort</em></p></div>
+      <div class="prio-row"><span class="prio-num">02</span><p><strong>Sediakan estimasi waktu tiba real-time</strong> berdasarkan jarak dalam kota/kabupaten sejak sebelum konfirmasi pesanan, agar pengguna percaya dan yakin memesan. <em style="color:var(--muted)">— High Impact, High Effort</em></p></div>
+      <div class="prio-row"><span class="prio-num">03</span><p><strong>Otomatis isi alamat pengirim</strong> berdasarkan lokasi pengguna saat ini agar pengguna bisa memesan kapan saja tanpa navigasi panjang. <em style="color:var(--muted)">— High Impact, Low Effort</em></p></div>
+      <div class="prio-row"><span class="prio-num">04</span><p><strong>Sediakan indikator ketersediaan kurir secara real-time</strong> agar pengguna merasa aman memesan di luar jam sibuk. <em style="color:var(--muted)">— High Impact, High Effort</em></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 IDEATE -->
+<section id="ideate" style="background:var(--paper);">
+  <span class="section-tag">03 / 05</span>
+  <span class="sec-eyebrow"><span class="line"></span>03 — Ideate</span>
+  <h2 class="sec-title">Eksplorasi Ide<br/>&amp; Brainstorming</h2>
+  <p class="sec-desc">
+    Tahap eksplorasi ide solusi, mulai dari Crazy 8's brainstorming kasar
+    hingga Low-Fidelity Sketches yang lebih terstruktur.
+  </p>
+  <div class="divider-line"><h3>Crazy 8's &amp; Brainstorming</h3></div>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/wvOB9nhqAOIYyQeCeEIs42/Untitled?node-id=480-12" allowfullscreen></iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">Crazy 8's Brainstorming · FigJam</span>
+      <a href="https://www.figma.com/design/wvOB9nhqAOIYyQeCeEIs42/Untitled?node-id=480-12&m=dev&t=Ujb1Rr2fb9VQZHF9-1" class="figma-open-btn" target="_blank">Buka di Figma</a>
+    </div>
+  </div>
+  <div class="divider-line"><h3>Low-Fidelity Sketches</h3></div>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?node-id=423-126" allowfullscreen></iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">Low-Fidelity Sketches · Wireflow · Figma</span>
+      <a href="https://www.figma.com/design/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?node-id=423-126&t=Z3sXr7FE9Q7zxfmE-1" class="figma-open-btn" target="_blank">Buka di Figma</a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PROTOTYPE -->
+<section id="prototype" style="background:var(--paper2);">
+  <span class="section-tag">04 / 05</span>
+  <span class="sec-eyebrow"><span class="line"></span>04 — Prototype</span>
+  <h2 class="sec-title">High-Fidelity<br/><span style="color:var(--accent)">Prototype</span></h2>
+  <p class="sec-desc">
+    Prototipe high-fidelity dibangun di Figma mencakup perjalanan pengguna
+    utama: Login/Register, Beranda, Pemesanan, Pembayaran, hingga Detail Pesanan.
+  </p>
+  <div class="divider-line"><h3>User Flow</h3></div>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?node-id=83-176" allowfullscreen></iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">High-Fidelity Flow · Main User Flow · Figma</span>
+      <a href="https://www.figma.com/design/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?node-id=83-176&t=Z3sXr7FE9Q7zxfmE-1" class="figma-open-btn" target="_blank">Buka di Figma</a>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:2.5rem;">
+    <a href="https://www.figma.com/proto/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?page-id=83%3A1290&node-id=151-126&viewport=235%2C2893%2C0.12&t=memEpcNmQoYiUFpB-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=151%3A126&show-proto-sidebar=1" class="btn-solid" target="_blank">
+      ↗ Buka Prototype di Figma (Full Screen)
+    </a>
+  </div>
+</section>
+
+<!-- 05 UI KIT -->
+<section id="uikit" style="background:var(--paper);">
+  <span class="section-tag">05 / 05</span>
+  <span class="sec-eyebrow"><span class="line"></span>05 — UI Kit &amp; Design System</span>
+  <h2 class="sec-title">Komponen &amp;<br/><span style="color:var(--accent)">Design System</span></h2>
+  <p class="sec-desc">
+    Sistem desain yang konsisten mencakup Brand Color, Typography, Button,
+    User Input, Tabs, PopUp, Icon, dan Logo — semua dibangun di Figma.
+  </p>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe src="https://embed.figma.com/design/VaW0Q6rtQkWxVx3e0LURI2/Untitled?node-id=2002-2&embed-host=share" allowfullscreen></iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">UI Kit · Design System · Figma</span>
+      <a href="https://www.figma.com/design/VaW0Q6rtQkWxVx3e0LURI2/Untitled?node-id=2004-433&t=Dd90iVFxylBdTijn-1" class="figma-open-btn" target="_blank">Buka di Figma</a>
+    </div>
+  </div>
+</section>
+
+<!-- 05.5 PROTOTYPE INTERAKTIF -->
+<section id="prototype-kit" style="background:var(--paper2);">
+  <span class="sec-eyebrow"><span class="line"></span>Prototype Interaktif</span>
+  <h2 class="sec-title">Coba Langsung<br/><span style="color:var(--accent)">Prototype-nya</span></h2>
+  <p class="sec-desc">
+    Prototype high-fidelity yang dapat langsung dicoba di bawah ini —
+    rasakan alur pemesanan dari halaman utama hingga konfirmasi pesanan.
+  </p>
+  <div class="figma-block">
+    <div class="figma-chrome">
+      <span class="chrome-dot" style="background:#ff5f56"></span>
+      <span class="chrome-dot" style="background:#ffbd2e"></span>
+      <span class="chrome-dot" style="background:#27c93f"></span>
+    </div>
+    <iframe
+      src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?page-id=83%3A1290&node-id=151-126&viewport=235%2C2893%2C0.12&t=memEpcNmQoYiUFpB-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=151%3A126&show-proto-sidebar=1"
+      allowfullscreen style="height:640px;">
+    </iframe>
+    <div class="figma-bar">
+      <span class="figma-bar-label">Interactive Prototype · KirimYuk · Figma</span>
+      <a href="https://www.figma.com/proto/2Imz8kXG7UNjlgTIwJSi4R/salinan-tugas?page-id=83%3A1290&node-id=151-126&scaling=scale-down&content-scaling=fixed&starting-point-node-id=151%3A126&show-proto-sidebar=1" class="figma-open-btn" target="_blank">Buka Full Screen</a>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TEST -->
+<section id="test" style="background:var(--paper2);">
+  <span class="sec-eyebrow"><span class="line"></span>06 — Test</span>
+  <h2 class="sec-title">Pengujian &amp;<br/><span style="color:var(--accent)">Evaluasi</span></h2>
+  <p class="sec-desc">
+    Saya berfokus pada masalah inti: memastikan kemudahan dan kenyamanan pemesanan.<br/>
+    <strong style="color:var(--ink);">Contoh Task:</strong>
+    "Anda ingin mengantar barang dengan segera, anda sadar tidak ada kendaraan di rumah,
+    temukan cara tercepat untuk memesan layanan tersebut."
+  </p>
+
+  <div class="test-responden-wrap">
+    <div class="responden-card">
+      <img src="FOTO/F6.jpeg" alt="Foto Responden" onerror="this.style.display='none'" />
+      <div class="responden-info">
+        <div class="responden-name">Alfi Mariani</div>
+        <div class="responden-role">Mahasiswa, 20 Tahun</div>
+        <div class="responden-quote">"Jarang menggunakan aplikasi transportasi online"</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="card">
+        <div class="insight-lbl">Metode Testing</div>
+        <div class="insight-row"><div class="dot"></div><p><strong>Metode:</strong> Qualitative Testing</p></div>
+        <div class="insight-row"><div class="dot"></div><p><strong>Teknik:</strong> Task-based testing + wawancara singkat</p></div>
+        <div class="insight-row"><div class="dot"></div><p><strong>Jumlah Responden:</strong> 1 orang</p></div>
+      </div>
+
+      <div class="test-table-card">
+        <div class="test-table-head">
+          <div class="insight-lbl" style="margin-bottom:0;">Hasil Pengujian Task</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Catatan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Membuka App &amp; Beranda</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Mudah dipahami</td>
+            </tr>
+            <tr>
+              <td>Login / Register</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Alur login lebih jelas setelah revisi — tombol &amp; pesan error terlihat</td>
+            </tr>
+            <tr>
+              <td>Input Lokasi</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Alur jelas</td>
+            </tr>
+            <tr>
+              <td>Estimasi &amp; Pesan</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Harga jelas</td>
+            </tr>
+            <tr>
+              <td>Pembayaran (Payment)</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Tombol payment berfungsi setelah prototype ulang</td>
+            </tr>
+            <tr>
+              <td>Pencarian Driver</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Status dimengerti</td>
+            </tr>
+            <tr>
+              <td>Selesai Perjalanan</td>
+              <td><span class="status-ok">✓ Berhasil</span></td>
+              <td>Konsisten</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK + IMPROVEMENT -->
+  <div class="improvement-grid">
+    <div class="card">
+      <div class="feedback-label" style="color:#7c3aed;">Feedback Pengguna</div>
+      <div class="feedback-q">Review 1 — Halaman Login</div>
+      <div class="feedback-a">"Secara keseluruhan desainnya sudah bagus dan rapi. Namun ada masukan pada bagian login berhasil — akan lebih baik jika menggunakan teks, karena tampilan saat ini terlihat seperti sedang loading atau lag. Dengan tampilan yang lebih jelas, informasi login berhasil akan lebih mudah dipahami oleh pengguna."</div>
+      <div class="feedback-q">Review 2 — Halaman Payment</div>
+      <div class="feedback-a">"Tombol payment tidak bisa ditekan, sehingga alur pembayaran tidak dapat diselesaikan pada prototype awal."</div>
+    </div>
+
+    <div class="card">
+      <div class="feedback-label" style="color:var(--accent);">Hasil &amp; Perbaikan (Improvement)</div>
+
+      <!-- Perbaikan 1: Login -->
+      <div class="ba-item">
+        <div class="ba-before">
+          <div class="ba-label before">Before — Login</div>
+          <div class="ba-text">Desain Login kurang jelas — tombol tidak mencolok dan tidak ada feedback error yang terlihat oleh pengguna.</div>
+        </div>
+        <div class="ba-after">
+          <div class="ba-label after">After — Login</div>
+          <div class="ba-text">Desain Login diperbarui: tombol lebih terlihat dan pesan validasi/error ditampilkan secara eksplisit.</div>
+        </div>
+      </div>
+
+      <!-- Perbaikan 2: Payment -->
+      <div class="ba-item">
+        <div class="ba-before">
+          <div class="ba-label before">Before — Payment</div>
+          <div class="ba-text">Tombol Payment tidak dapat ditekan pada prototype awal sehingga alur pembayaran tidak bisa diselesaikan.</div>
+        </div>
+        <div class="ba-after">
+          <div class="ba-label after">After — Payment</div>
+          <div class="ba-text">Prototype diulang sehingga alur pembayaran berjalan penuh dan tombol Payment berfungsi dengan benar.</div>
+        </div>
+      </div>
+
+      <!-- Perbaikan 3: Contact Driver -->
+      <div class="ba-item">
+        <div class="ba-before">
+          <div class="ba-label before">Before — Contact Driver</div>
+          <div class="ba-text">Tombol "Contact Driver" sulit ditemui — tersembunyi di dalam halaman detail perjalanan.</div>
+        </div>
+        <div class="ba-after">
+          <div class="ba-label after">After — Contact Driver</div>
+          <div class="ba-text">Tombol "Contact Driver" dipindahkan ke Navbar bersebelahan dengan Riwayat Perjalanan agar langsung bisa diakses.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kesimpulan-box">
+    <div class="insight-lbl">Kesimpulan</div>
+    <p>
+      Prototype aplikasi "KirimYuk" berhasil diuji secara fungsional untuk kebutuhan dasar transportasi.
+      Aplikasi mudah digunakan dan alurnya jelas. Jika berkenan, pengembangan UI selanjutnya akan
+      berfokus pada penambahan fitur sekunder seperti notifikasi dan layanan non-transportasi untuk
+      meningkatkan daya saing dengan super App yang ada.
+    </p>
+  </div>
+</section>
+
+<!-- CREATOR -->
+<section class="creator" id="creator">
+  <span class="sec-eyebrow" style="justify-content:center;"><span class="line"></span>Creator Profile</span>
+  <h2 class="sec-title" style="margin-bottom:3rem;">Tentang Saya</h2>
+  <div class="creator-card">
+    <img class="creator-photo" src="FOTO/F5.png" alt="Foto Creator"
+         onerror="this.outerHTML='<div class=\'creator-photo-fallback\'>🧑‍🎨</div>'" />
+    <div class="creator-name">Habibbah Prima Risqullah</div>
+    <div class="creator-nim">253307031 · 2B · UI/UX Desain</div>
+  </div>
+</section>
+
+<div class="watermark">KirimYuk</div>
+
+<footer>
+  <div class="foot-logo">UX<span>.</span>Portfolio</div>
+  <p>Designed with ♥ by Habibbah Prima R</p>
+  <p class="mono">2025</p>
+</footer>
+
+</body>
+</html>

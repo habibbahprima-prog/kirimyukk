@@ -404,6 +404,12 @@
       display: grid; grid-template-columns: 1fr 1.8fr;
       gap: 1.5rem; margin-bottom: 2rem; align-items: start;
     }
+
+    /* 2-responden row */
+    .responden-pair {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; margin-bottom: 2rem;
+    }
     .responden-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden; box-shadow: var(--lift);
@@ -578,6 +584,7 @@
       .two-col { grid-template-columns: 1fr; }
       .define-grid { grid-template-columns: 1fr; }
       .test-responden-wrap { grid-template-columns: 1fr; }
+      .responden-pair { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: 1fr; }
       .improvement-grid { grid-template-columns: 1fr; }
       .ba-item { grid-template-columns: 1fr; }
@@ -942,86 +949,100 @@
     temukan cara tercepat untuk memesan layanan tersebut."
   </p>
 
-  <div class="test-responden-wrap">
-    <div class="responden-card">
-      <img src="FOTO/F6.jpeg" alt="Foto Responden" onerror="this.style.display='none'" />
-      <div class="responden-info">
-        <div class="responden-name">Alfi Mariani</div>
-        <div class="responden-role">Mahasiswa, 20 Tahun</div>
-        <div class="responden-quote">"Jarang menggunakan aplikasi transportasi online"</div>
-      </div>
-    </div>
+  <!-- Metode Testing -->
+  <div class="card" style="margin-bottom:2rem;">
+    <div class="insight-lbl">Metode Testing</div>
+    <div class="insight-row"><div class="dot"></div><p><strong>Metode:</strong> Qualitative Testing</p></div>
+    <div class="insight-row"><div class="dot"></div><p><strong>Teknik:</strong> Task-based testing + wawancara singkat</p></div>
+    <div class="insight-row"><div class="dot"></div><p><strong>Jumlah Responden:</strong> 2 orang</p></div>
+  </div>
 
-    <div style="display:flex;flex-direction:column;gap:1.2rem;">
-      <div class="card">
-        <div class="insight-lbl">Metode Testing</div>
-        <div class="insight-row"><div class="dot"></div><p><strong>Metode:</strong> Qualitative Testing</p></div>
-        <div class="insight-row"><div class="dot"></div><p><strong>Teknik:</strong> Task-based testing + wawancara singkat</p></div>
-        <div class="insight-row"><div class="dot"></div><p><strong>Jumlah Responden:</strong> 1 orang</p></div>
-      </div>
+  <!-- 2 Responden -->
+  <div class="responden-pair">
 
+    <!-- Responden 1: Alfi -->
+    <div>
+      <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:.8rem;font-family:'JetBrains Mono',monospace;">Responden 01</div>
+      <div class="responden-card" style="margin-bottom:1.2rem;">
+        <img src="FOTO/F6.jpeg" alt="Foto Alfi" onerror="this.style.display='none'" />
+        <div class="responden-info">
+          <div class="responden-name">Alfi Mariani</div>
+          <div class="responden-role">Mahasiswa, 20 Tahun</div>
+          <div class="responden-quote">"Jarang menggunakan aplikasi transportasi online"</div>
+        </div>
+      </div>
       <div class="test-table-card">
         <div class="test-table-head">
           <div class="insight-lbl" style="margin-bottom:0;">Hasil Pengujian Task</div>
         </div>
         <table>
           <thead>
-            <tr>
-              <th>Task</th>
-              <th>Status</th>
-              <th>Catatan</th>
-            </tr>
+            <tr><th>Task</th><th>Status</th><th>Catatan</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Membuka App &amp; Beranda</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Mudah dipahami</td>
-            </tr>
-            <tr>
-              <td>Login / Register</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Alur login lebih jelas setelah revisi — tombol &amp; pesan error terlihat</td>
-            </tr>
-            <tr>
-              <td>Input Lokasi</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Alur jelas</td>
-            </tr>
-            <tr>
-              <td>Estimasi &amp; Pesan</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Harga jelas</td>
-            </tr>
-            <tr>
-              <td>Pembayaran (Payment)</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Tombol payment berfungsi setelah prototype ulang</td>
-            </tr>
-            <tr>
-              <td>Pencarian Driver</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Status dimengerti</td>
-            </tr>
-            <tr>
-              <td>Selesai Perjalanan</td>
-              <td><span class="status-ok">✓ Berhasil</span></td>
-              <td>Konsisten</td>
-            </tr>
+            <tr><td>Membuka App &amp; Beranda</td><td><span class="status-ok">✓ Berhasil</span></td><td>Mudah dipahami</td></tr>
+            <tr><td>Login / Register</td><td><span class="status-ok">✓ Berhasil</span></td><td>Alur login lebih jelas setelah revisi</td></tr>
+            <tr><td>Input Lokasi</td><td><span class="status-ok">✓ Berhasil</span></td><td>Alur jelas</td></tr>
+            <tr><td>Estimasi &amp; Pesan</td><td><span class="status-ok">✓ Berhasil</span></td><td>Harga jelas</td></tr>
+            <tr><td>Pembayaran (Payment)</td><td><span class="status-ok">✓ Berhasil</span></td><td>Tombol payment berfungsi setelah prototype ulang</td></tr>
+            <tr><td>Pencarian Driver</td><td><span class="status-ok">✓ Berhasil</span></td><td>Status dimengerti</td></tr>
+            <tr><td>Selesai Perjalanan</td><td><span class="status-ok">✓ Berhasil</span></td><td>Konsisten</td></tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- Responden 2: Virizia -->
+    <div>
+      <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:.8rem;font-family:'JetBrains Mono',monospace;">Responden 02</div>
+      <div class="responden-card" style="margin-bottom:1.2rem;">
+        <img src="FOTO/F7.png" alt="Foto Virizia" onerror="this.style.display='none'" />
+        <div class="responden-info">
+          <div class="responden-name">Virizia Aqila Nifizalza</div>
+          <div class="responden-role">Mahasiswa, 19 Tahun</div>
+          <div class="responden-quote">"Aplikasinya sudah bagus, mudah digunakan dan dipahami"</div>
+        </div>
+      </div>
+      <div class="test-table-card">
+        <div class="test-table-head">
+          <div class="insight-lbl" style="margin-bottom:0;">Hasil Pengujian Task</div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Task</th><th>Status</th><th>Catatan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Membuka App &amp; Beranda</td><td><span class="status-ok">✓ Berhasil</span></td><td>Tampilan menarik dan jelas</td></tr>
+            <tr><td>Login / Register</td><td><span class="status-ok">✓ Berhasil</span></td><td>Mudah dipahami</td></tr>
+            <tr><td>Input Lokasi</td><td><span class="status-ok">✓ Berhasil</span></td><td>Langsung dimengerti</td></tr>
+            <tr><td>Estimasi &amp; Pesan</td><td><span class="status-ok">✓ Berhasil</span></td><td>Informasi harga terlihat jelas</td></tr>
+            <tr><td>Pembayaran (Payment)</td><td><span class="status-ok">✓ Berhasil</span></td><td>Alur pembayaran lancar</td></tr>
+            <tr><td>Pencarian Driver</td><td><span class="status-ok">✓ Berhasil</span></td><td>Status mudah dimengerti</td></tr>
+            <tr><td>Selesai Perjalanan</td><td><span class="status-ok">✓ Berhasil</span></td><td>Konsisten dan nyaman</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <!-- FEEDBACK + IMPROVEMENT -->
   <div class="improvement-grid">
-    <div class="card">
-      <div class="feedback-label" style="color:#7c3aed;">Feedback Pengguna</div>
-      <div class="feedback-q">Review 1 — Halaman Login</div>
-      <div class="feedback-a">"Secara keseluruhan desainnya sudah bagus dan rapi. Namun ada masukan pada bagian login berhasil — akan lebih baik jika menggunakan teks, karena tampilan saat ini terlihat seperti sedang loading atau lag. Dengan tampilan yang lebih jelas, informasi login berhasil akan lebih mudah dipahami oleh pengguna."</div>
-      <div class="feedback-q">Review 2 — Halaman Payment</div>
-      <div class="feedback-a">"Tombol payment tidak bisa ditekan, sehingga alur pembayaran tidak dapat diselesaikan pada prototype awal."</div>
+    <div style="display:flex;flex-direction:column;gap:1.2rem;">
+      <!-- Feedback Alfi -->
+      <div class="card">
+        <div class="feedback-label" style="color:#7c3aed;">Feedback — Alfi Mariani</div>
+        <div class="feedback-q">Review 1 — Halaman Login</div>
+        <div class="feedback-a">"Secara keseluruhan desainnya sudah bagus dan rapi. Namun ada masukan pada bagian login berhasil — akan lebih baik jika menggunakan teks, karena tampilan saat ini terlihat seperti sedang loading atau lag. Dengan tampilan yang lebih jelas, informasi login berhasil akan lebih mudah dipahami oleh pengguna."</div>
+        <div class="feedback-q">Review 2 — Halaman Payment</div>
+        <div class="feedback-a">"Tombol payment tidak bisa ditekan, sehingga alur pembayaran tidak dapat diselesaikan pada prototype awal."</div>
+      </div>
+      <!-- Feedback Virizia -->
+      <div class="card">
+        <div class="feedback-label" style="color:var(--accent2);">Feedback — Virizia Aqila Nifizalza</div>
+        <div class="feedback-q">Review Keseluruhan Aplikasi</div>
+        <div class="feedback-a">"Aplikasinya sudah bagus, mudah digunakan dan dipahami. Semua fitur berjalan dengan baik dan alur penggunaannya terasa natural."</div>
+      </div>
     </div>
 
     <div class="card">
@@ -1050,19 +1071,6 @@
           <div class="ba-text">Prototype diulang sehingga alur pembayaran berjalan penuh dan tombol Payment berfungsi dengan benar.</div>
         </div>
       </div>
-
-      <!-- Perbaikan 3: Contact Driver -->
-      <div class="ba-item">
-        <div class="ba-before">
-          <div class="ba-label before">Before — Contact Driver</div>
-          <div class="ba-text">Tombol "Contact Driver" sulit ditemui — tersembunyi di dalam halaman detail perjalanan.</div>
-        </div>
-        <div class="ba-after">
-          <div class="ba-label after">After — Contact Driver</div>
-          <div class="ba-text">Tombol "Contact Driver" dipindahkan ke Navbar bersebelahan dengan Riwayat Perjalanan agar langsung bisa diakses.</div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="kesimpulan-box">
